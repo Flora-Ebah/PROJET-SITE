@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaCommentDots } from 'react-icons/fa';
+import { FaCommentDots, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const ProductCard = ({ product }) => (
   <motion.div
-    className="bg-white shadow-md p-4 m-2 w-72 h-80 flex-shrink-0 relative overflow-hidden"
+    className="bg-white shadow-md p-4 m-2 w-full h-80 flex-shrink-0 relative overflow-hidden"
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
   >
@@ -28,61 +28,37 @@ const ProductSection = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const totalProducts = products.length;
 
-  useEffect(() => {
-    const carousel = carouselRef.current;
-    let animationFrameId;
-    let lastScrollPosition = 0;
-
-    const scroll = () => {
-      if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth) {
-        carousel.scrollLeft = 0;
-      } else {
-        carousel.scrollLeft += 1;
-      }
-
-      const currentScrollPosition = carousel.scrollLeft;
-      if (currentScrollPosition !== lastScrollPosition) {
-        const newPage = Math.round(currentScrollPosition / (carousel.clientWidth / totalProducts));
-        setCurrentPage(newPage % totalProducts);
-        lastScrollPosition = currentScrollPosition;
-      }
-
-      animationFrameId = requestAnimationFrame(scroll);
-    };
-
-    const startScroll = () => {
-      animationFrameId = requestAnimationFrame(scroll);
-    };
-
-    const stopScroll = () => {
-      cancelAnimationFrame(animationFrameId);
-    };
-
-    carousel.addEventListener('mouseenter', stopScroll);
-    carousel.addEventListener('mouseleave', startScroll);
-
-    startScroll();
-
-    return () => {
-      stopScroll();
-      carousel.removeEventListener('mouseenter', stopScroll);
-      carousel.removeEventListener('mouseleave', startScroll);
-    };
-  }, [totalProducts]);
-
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
+  const scrollToProduct = (index) => {
     if (carouselRef.current) {
-      const scrollAmount = (newPage * carouselRef.current.clientWidth) / totalProducts;
+      const scrollAmount = index * carouselRef.current.offsetWidth;
       carouselRef.current.scrollTo({
         left: scrollAmount,
         behavior: 'smooth'
       });
+      setCurrentPage(index);
     }
   };
 
+  const handleNext = () => {
+    const nextPage = (currentPage + 1) % totalProducts;
+    scrollToProduct(nextPage);
+  };
+
+  const handlePrev = () => {
+    const prevPage = (currentPage - 1 + totalProducts) % totalProducts;
+    scrollToProduct(prevPage);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleNext();
+    }, 5000); // Change d'image toutes les 5 secondes
+
+    return () => clearInterval(interval);
+  }, [currentPage]);
+
   return (
-    <section className="py-8 md:py-12 bg-white mt-8 md:mt-16 mx-4 md:mx-8 lg:mx-24">
+    <section id="solutions-section" className="py-8 md:py-12 bg-white mt-8 md:mt-16 mx-4 md:mx-8 lg:mx-24">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row">
           {/* Côté gauche avec le texte */}
@@ -104,25 +80,40 @@ const ProductSection = () => {
           </div>
 
           {/* Côté droit avec le carrousel de produits */}
-          <div className="w-full md:w-1/2 overflow-hidden mt-8 md:mt-0">
+          <div className="w-full md:w-1/2 overflow-hidden mt-8 md:mt-0 relative">
             <div 
               ref={carouselRef}
               className="flex overflow-x-hidden"
               style={{ scrollBehavior: 'smooth' }}
             >
               {products.map((product, index) => (
-                <ProductCard key={`${product.id}-${index}`} product={product} />
+                <div key={`${product.id}-${index}`} className="w-full flex-shrink-0">
+                  <ProductCard product={product} />
+                </div>
               ))}
             </div>
-            {/* Pagination avec des traits */}
+            {/* Boutons de navigation */}
+            <button 
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 p-2 rounded-full"
+              onClick={handlePrev}
+            >
+              <FaChevronLeft className="text-2xl text-gray-800" />
+            </button>
+            <button 
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 p-2 rounded-full"
+              onClick={handleNext}
+            >
+              <FaChevronRight className="text-2xl text-gray-800" />
+            </button>
+            {/* Pagination avec des points */}
             <div className="flex justify-center mt-4">
               {Array.from({ length: totalProducts }).map((_, index) => (
                 <div
                   key={index}
-                  className={`mx-1 w-6 md:w-8 h-1 rounded-full cursor-pointer ${
+                  className={`mx-1 w-3 h-3 rounded-full cursor-pointer ${
                     currentPage === index ? 'bg-yellow-400' : 'bg-gray-300'
                   }`}
-                  onClick={() => handlePageChange(index)}
+                  onClick={() => scrollToProduct(index)}
                 />
               ))}
             </div>

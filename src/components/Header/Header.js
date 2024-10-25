@@ -2,6 +2,22 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
+/**
+ * Header - Composant de navigation principal
+ * 
+ * Ce composant affiche le menu de navigation en haut de chaque page.
+ * Il est responsive, s'adaptant aux écrans desktop et mobile.
+ * 
+ * Fonctionnalités :
+ * - Menu déroulant pour les écrans mobiles
+ * - Indication visuelle de la page active
+ * - Animations fluides lors des interactions
+ * 
+ * Le composant utilise :
+ * - useState pour gérer l'état d'ouverture/fermeture du menu mobile
+ * - useLocation pour déterminer la page active
+ * - Framer Motion pour les animations
+ */
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -11,13 +27,14 @@ const Header = () => {
     { name: 'Service', path: '/services' },
     { name: 'Produit', path: '/produits' },
     { name: 'A propos', path: '/a-propos' },
+    { name: 'Blog', path: '/blog' },
     { name: 'Contact', path: '/contact' },
   ];
 
   return (
-    <header className="bg-white text-gray-800 shadow-lg fixed top-0 left-0 right-0 z-50 font-roboto-mono">
+    <header className="bg-white text-gray-800 shadow-lg fixed top-0 left-0 right-0 z-50 font-roboto-mono" role="banner">
       <div className="h-1 bg-green-500 absolute top-0 left-0 right-0"></div>
-      <nav className="container mx-auto px-8 sm:px-12 md:px-16 lg:px-20 py-5 sm:py-6">
+      <nav className="container mx-auto px-8 sm:px-12 md:px-16 lg:px-20 py-5 sm:py-6" aria-label="Navigation principale">
         <div className="flex items-center justify-between">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -61,14 +78,10 @@ const Header = () => {
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-800 focus:outline-none p-2"
               aria-label="Menu"
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
             >
-              <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
-                {isOpen ? (
-                  <path fillRule="evenodd" clipRule="evenodd" d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z" />
-                ) : (
-                  <path fillRule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z" />
-                )}
-              </svg>
+              Menu
             </button>
           </div>
         </div>

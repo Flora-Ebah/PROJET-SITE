@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const BlogSection = () => {
   const blogPosts = [
@@ -52,13 +53,15 @@ const BlogSection = () => {
               OPHIR Technologies souhaite établir une coopération commerciale gagnant-gagnant 
               avec des distributeurs du monde entier.
             </p>
-            <motion.button 
-              className="flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 transition-colors duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Voir plus <FaArrowRight className="ml-2" />
-            </motion.button>
+            <Link to="/blog">
+              <motion.button 
+                className="flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 transition-colors duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Voir plus <FaArrowRight className="ml-2" />
+              </motion.button>
+            </Link>
           </motion.div>
 
           {/* Colonne de droite */}

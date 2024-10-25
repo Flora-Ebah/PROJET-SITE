@@ -2,6 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaWhatsapp, FaPhone, FaEnvelope } from 'react-icons/fa';
 
+/**
+ * LandingPageHero - Section d'en-tête de la page d'accueil
+ * 
+ * Ce composant crée une section hero attrayante pour la page d'accueil.
+ * Il présente un carrousel d'images en arrière-plan et un appel à l'action principal.
+ * 
+ * Caractéristiques :
+ * - Carrousel d'images automatique
+ * - Bouton CTA pour découvrir les solutions
+ * - Icônes de contact flottantes (pour les écrans larges)
+ * - Animations pour une expérience utilisateur dynamique
+ * 
+ * Le composant utilise :
+ * - useState et useEffect pour gérer le carrousel d'images
+ * - Framer Motion pour les animations
+ * - React Icons pour les icônes de contact
+ */
 const LandingPageHero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = [
@@ -18,6 +35,13 @@ const LandingPageHero = () => {
     }, 5000);
     return () => clearInterval(timer);
   }, [slides.length]);
+
+  const scrollToSolutions = () => {
+    const solutionsSection = document.getElementById('solutions-section');
+    if (solutionsSection) {
+      solutionsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className="relative h-screen overflow-hidden border-2 border-yellow-400">
@@ -47,7 +71,10 @@ const LandingPageHero = () => {
             Solutions innovantes de télémédecine. Nous révolutionnons l'accès aux soins en combinant expertise médicale et technologie avancée.
           </p>
           <div className="text-left">
-            <button className="mt-8 bg-white text-blue-500 font-bold py-3 px-6 hover:bg-blue-100 transition duration-300">
+            <button 
+              className="mt-8 bg-white text-blue-500 font-bold py-3 px-6 hover:bg-blue-100 transition duration-300"
+              onClick={scrollToSolutions}
+            >
               Découvrir nos solutions
             </button>
           </div>

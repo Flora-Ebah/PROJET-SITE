@@ -1,8 +1,36 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { FaEnvelope } from 'react-icons/fa';
 
+/**
+ * ServiceSection - Composant présentant en détail les services offerts par Ophir Technologies
+ * 
+ * Ce composant crée une section complète et interactive détaillant chaque service
+ * de télémédecine proposé par l'entreprise, avec des descriptions approfondies et des
+ * visuels attrayants.
+ * 
+ * Caractéristiques principales :
+ * - Présentation visuelle attrayante de chaque service avec des images de haute qualité
+ * - Descriptions détaillées expliquant les avantages et fonctionnalités de chaque service
+ * - Animations au défilement pour une révélation progressive et engageante du contenu
+ * - Bouton d'appel à l'action (CTA) pour chaque service, encourageant le contact
+ * - Design alternant texte/image pour une meilleure lisibilité et un flux visuel dynamique
+ * 
+ * Structure pour chaque service :
+ * - Image illustrative du service
+ * - Titre du service
+ * - Description détaillée
+ * - Bouton CTA "Contactez-nous"
+ * 
+ * Aspects techniques :
+ * - Utilisation de Framer Motion pour les animations au défilement et les interactions
+ * - Implémentation du hook useInView pour déclencher les animations au bon moment
+ * - Intégration d'icônes React Icons pour les boutons CTA
+ * - Utilisation de Tailwind CSS pour un design responsive et esthétique
+ * 
+ * Ce composant est crucial pour informer les visiteurs sur l'étendue et la qualité
+ * des services d'Ophir Technologies, contribuant ainsi à la conversion et à l'engagement client.
+ */
 const services = [
   {
     title: "Solutions de Téléconsultation",
@@ -32,7 +60,8 @@ const services = [
 ];
 
 const ServiceSection = () => {
-  const [ref, inView] = useInView({
+  const ref = useRef(null);
+  const inView = useInView(ref, {
     triggerOnce: true,
     threshold: 0.1,
   });

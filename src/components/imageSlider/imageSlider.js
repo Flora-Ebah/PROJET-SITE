@@ -1,6 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+/**
+ * ImageSlider - Composant de carrousel d'images avancé
+ * 
+ * Ce composant crée un carrousel d'images interactif et dynamique, mettant en valeur
+ * les différentes solutions de télémédecine offertes par Ophir Technologies.
+ * 
+ * Caractéristiques principales :
+ * - Défilement automatique des images avec transition fluide
+ * - Contrôle manuel via des points de navigation
+ * - Superposition de texte descriptif sur chaque image
+ * - Animations de transition entre les slides pour une expérience visuelle améliorée
+ * - Design responsive s'adaptant à différentes tailles d'écran
+ * 
+ * Structure de chaque slide :
+ * - Image de fond à plein écran
+ * - Titre de la solution mis en évidence
+ * - Description courte de la solution
+ * - Overlay semi-transparent pour améliorer la lisibilité du texte
+ * 
+ * Fonctionnalités techniques :
+ * - Utilisation de useState pour gérer l'état du slide actif
+ * - useEffect pour le défilement automatique et la gestion du cycle de vie
+ * - Framer Motion pour les animations de transition entre les slides
+ * - Contrôles de navigation permettant aux utilisateurs de choisir un slide spécifique
+ * 
+ * Ce composant joue un rôle clé dans la présentation visuelle des solutions d'Ophir Technologies,
+ * offrant une expérience utilisateur engageante et informative.
+ */
 const solutions = [
   { 
     url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d', 

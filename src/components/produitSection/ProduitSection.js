@@ -4,6 +4,24 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+/**
+ * ProduitSection - Section de présentation des produits
+ * 
+ * Ce composant affiche une grille de produits avec des détails extensibles.
+ * Chaque produit peut être sélectionné pour afficher plus d'informations.
+ * 
+ * Fonctionnalités :
+ * - Affichage en grille des produits
+ * - Carrousel d'images pour chaque produit
+ * - Détails extensibles pour chaque produit
+ * - Animations fluides lors des interactions
+ * 
+ * Le composant utilise :
+ * - useState pour gérer la sélection des produits et des images
+ * - useRef pour le défilement automatique vers les détails
+ * - Framer Motion pour les animations
+ * - react-slick pour le carrousel d'images
+ */
 const ProduitSection = () => {
   const [selectedProduit, setSelectedProduit] = useState(0);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -41,10 +59,6 @@ const ProduitSection = () => {
         "Application mobile pour le patient",
         "Tableau de bord en temps réel pour les professionnels de santé"
       ],
-      boutons: [
-        { texte: "Demander une démo", lien: "/demo" },
-        { texte: "Télécharger la brochure", lien: "/brochure" }
-      ]
     },
     {
       titre: "Plateforme de Télémédecine Sécurisée",
@@ -61,10 +75,6 @@ const ProduitSection = () => {
         "Prescription électronique",
         "Rapports et analyses pour les professionnels de santé"
       ],
-      boutons: [
-        { texte: "Demander une démo", lien: "/demo" },
-        { texte: "Télécharger la brochure", lien: "/brochure" }
-      ]
     },
   ];
 
@@ -79,12 +89,11 @@ const ProduitSection = () => {
   };
 
   const handleProduitClick = (index) => {
-    setSelectedProduit(selectedProduit === index ? null : index);
-    if (selectedProduit !== index) {
-      setTimeout(() => {
-        descriptionRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    }
+    setSelectedProduit(index);
+    setSelectedImage(0); // Reset selected image when changing product
+    setTimeout(() => {
+      descriptionRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
   return (
@@ -118,8 +127,8 @@ const ProduitSection = () => {
                   onClick={() => handleProduitClick(index)}
                   className="mt-2 text-blue-500 hover:text-blue-700 transition duration-300 flex items-center"
                 >
-                  {selectedProduit === index ? "Voir moins" : "Voir plus"}
-                  <svg className={`w-4 h-4 ml-2 transform ${selectedProduit === index ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  En savoir plus
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
@@ -132,6 +141,7 @@ const ProduitSection = () => {
           {selectedProduit !== null && (
             <motion.div
               ref={descriptionRef}
+              key={selectedProduit}
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}

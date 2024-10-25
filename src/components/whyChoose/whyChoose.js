@@ -2,6 +2,36 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FaStethoscope, FaUsers, FaCertificate, FaHandshake } from 'react-icons/fa';
 
+/**
+ * WhyChoose - Composant présentant les raisons de choisir Ophir Technologies
+ * 
+ * Ce composant crée une section visuelle et interactive mettant en avant les principaux
+ * avantages et points forts d'Ophir Technologies dans le domaine de la télémédecine.
+ * 
+ * Caractéristiques principales :
+ * - Utilisation d'icônes thématiques pour une représentation visuelle claire des avantages
+ * - Animations au survol pour une meilleure interaction et engagement de l'utilisateur
+ * - Design responsive s'adaptant à différentes tailles d'écran (mobile, tablette, desktop)
+ * - Mise en évidence alternée des cartes pour une meilleure lisibilité
+ * 
+ * Structure :
+ * - Titre de section et texte d'introduction
+ * - Grille de cartes présentant chaque avantage clé
+ * 
+ * Chaque carte contient :
+ * - Une icône représentative
+ * - Un titre court et accrocheur
+ * - Une brève description de l'avantage
+ * - Une animation de survol pour améliorer l'interactivité
+ * 
+ * Le composant utilise :
+ * - Framer Motion pour les animations d'apparition et de survol
+ * - React Icons pour les icônes thématiques
+ * - Tailwind CSS pour le styling et la responsivité
+ * 
+ * Ce composant joue un rôle crucial dans la conversion des visiteurs en démontrant
+ * clairement la valeur ajoutée et l'expertise d'Ophir Technologies.
+ */
 const WhyChoose = () => {
   const cards = [
     { title: 'SERVICES', description: 'Solutions de télémédecine innovantes pour les centres de santé et cliniques.', icon: FaStethoscope },
